@@ -29,14 +29,8 @@ void point(const Vertex2& vertex) {
     }
 }
 
-void render() {
-    // Limpiar el framebuffer
-    clear();
-
-    // Establecer el color de borrado (clear color)
-    setCurrentColor(Color(0, 0, 128));  // Azul marino
-
-    // Crear un vector de puntos para el polígono #2
+void poligon2() {
+        // Crear un vector de puntos para el polígono #2
     std::vector<Vertex2> polygonPoints = {
         {321, 335}, {288, 286}, {339, 251}, {374, 302}
     };
@@ -55,6 +49,17 @@ void render() {
     const Vertex2& startPoint = polygonPoints[polygonPoints.size() - 1];
     const Vertex2& endPoint = polygonPoints[0];
     framebuffer.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y, outlineColor);
+
+}
+
+void render() {
+    // Limpiar el framebuffer
+    clear();
+
+    // Establecer el color de borrado (clear color)
+    setCurrentColor(Color(0, 0, 128));  // Azul marino
+
+    poligon2();
 
     // Renderizar el framebuffer en un archivo BMP
     framebuffer.renderBuffer("out.bmp");
