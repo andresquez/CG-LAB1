@@ -138,6 +138,9 @@ void render() {
     setCurrentColor(Color(0, 0, 128));  // Azul marino
 
     // Dibujar los polígonos
+    poligon1();
+    poligon2();
+    poligon3();
     poligon4();
     poligon5();
 
