@@ -116,6 +116,55 @@ public:
         }
     }
 
+    void fillPolygon(const std::vector<Vertex2>& vertices, const Color& color) {
+        float minY = vertices[0].y;
+        float maxY = vertices[0].y;
+        for (const auto& vertex : vertices) {
+            if (vertex.y < minY) {
+                minY = vertex.y;
+            }
+            if (vertex.y > maxY) {
+                maxY = vertex.y;
+            }
+        }
+
+        for (int y = static_cast<int>(minY); y <= static_cast<int>(maxY); ++y) {
+            std::vector<float> intersections;
+
+            for (size_t i = 0; i < vertices.size(); ++i) {
+                const Vertex2& currentVertex = vertices[i];
+                const Vertex2& nextVertex = vertices[(i + 1) % vertices.size()];
+
+                if ((currentVertex.y <= y && nextVertex.y > y) ||
+                    (currentVertex.y > y && nextVertex.y <= y)) {
+                    float x = currentVertex.x +
+                              (y - currentVertex.y) *
+                                  (nextVertex.x - currentVertex.x) /
+                                  (nextVertex.y - currentVertex.y);
+                    intersections.push_back(x);
+                }
+            }
+
+            std::sort(intersections.begin(), intersections.end());
+
+            for (size_t i = 0; i < intersections.size(); i += 2) {
+                int startX = static_cast<int>(intersections[i]);
+                int endX = static_cast<int>(intersections[i + 1]);
+
+                if (startX < 0) {
+                    startX = 0;
+                }
+                if (endX >= width_) {
+                    endX = width_ - 1;
+                }
+
+                for (int x = startX; x <= endX; ++x) {
+                    setPixel(x, y, color);
+                }
+            }
+        }
+    }
+
 private:
     int width_;
     int height_;
