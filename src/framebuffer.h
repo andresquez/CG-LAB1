@@ -47,7 +47,7 @@ public:
         file.write("\x00\x00\x00\x00", 4);  // Colores importantes (0)
 
         // Escribir datos de píxeles en el archivo BMP
-        for (int y = height_ - 1; y >= 0; --y) {
+        for (int y =  0; y < height_; ++y) {
             for (int x = 0; x < width_; ++x) {
                 const Color& pixel = pixels_[x + y * width_];
                 file.write(reinterpret_cast<const char*>(&pixel.b), 1);  // Componente azul
